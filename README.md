@@ -2,6 +2,6 @@
 Stress Test for Web pages sample using Gremlins.js
 
 ## Grupo:
-(assd)
-(pcosv)
-(vsychen)
+* Ângelo de Sant'Ana(assd)
+* Paula Vaz (pcosv)
+* Victor Chen (vsychen)
