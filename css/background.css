@@ -1,0 +1,112 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#home {
+  background: url(../img/background.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#home div {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  height: 30%;
+  width: 50%;
+  margin: -10% 0 0 -25%;
+  text-align: center;
+  font-size: 2.5vh;
+}
+
+#about {
+  background-color: #e67e22;
+  color: #ffffff;
+  padding-bottom: 20px;
+  direction: rtl;
+  text-align: justify;
+  overflow: hidden;
+}
+
+#about .textbox {
+  width: 70%;
+  align: right;
+  margin: 20px 50px;
+}
+
+#questions {
+  background-color: #ffffff;
+  padding-bottom: 20px;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.list {
+  align: left;
+  margin: 20px 50px;
+}
+
+#questions-list li {
+  list-style-type: decimal;
+  padding: 1vh;
+}
+
+#curiosities {
+  background-color: #e67e22;
+  color: #ffffff;
+  padding-bottom: 20px;
+  text-align: justify;
+  overflow: hidden;
+}
+
+#curiosities-list li {
+  list-style-type: circle;
+  padding: 1vh;
+}
+
+#team {
+  background-color: #ffffff;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+#team .profile {
+  width: 160px;
+  height: 160px;
+  display: inline;
+  margin: 5vh 5vw;
+  border-radius: 50%;
+}
+
+#files {
+  background-color: #e67e22;
+  color: #ffffff;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+#files .group-files {
+  width: 80%;
+  align: center;
+  left: 50%;
+  margin: 0 0 0 10%;
+}
+
+#files .icon {
+  display: inline-block;
+  width: 30%;
+  height: 15vh;
+  text-align: center;
+  font-size: 6vh;
+}
+
+#files .icon u {
+  display: block;
+  font-size: 3vh;
+}
