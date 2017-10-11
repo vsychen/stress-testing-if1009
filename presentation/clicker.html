@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Página para teste do Gremlin de cliques">
+    <meta name="author" content="Victor Chen">
+
+    <title>Clicker Gremlin - Test Page</title>
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Responsive Navbar CSS by Mostafa Omar -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <!-- Page's Custom CSS -->
+    <style>
+      * {
+        font-family: verdana;
+      }
+  
+      body {
+        overflow: hidden;
+      }
+
+      .text {
+        color: #000000;
+      }
+
+      .text:hover { /* Gremlins não acionam */
+        color: #ff0000;
+      }
+
+      button {
+        margin: 10px;
+        padding: 10px;
+      }
+
+      .text > button {
+        margin: 0px;
+        padding: 0px;
+      }
+
+    </style>
+  </head>
+
+  <body style="max-width:100%">
+    <header>
+      <nav id="navbar" style="z-index:1000">
+        <div class="toggle-icon">
+          <span class="toggle">☰</span>
+        </div>
+        <ul class="list-item">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#anothermenu">Another menu</a></li>
+          <li><a href="#extra">Extra</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="home" style="margin:10% 0 0 5%">
+      <div class="text" style="top:20%;left:10%;height:30%;width:90%;text-align:center;font-size:2.5vh;">
+        dry mammoth paddle responsible somber flood hole form fail fortunate abrupt hammer fearless bedroom mindless wicked burly uncle lock squeal fumbling wink vulgar mine tumble seashore carve symptomatic greet dark confess irritate desk approve examine complete meat end oval crawl fax beginner remind grain imaginary teaching amusing regret innocent communicate <button onclick="helloworld('a')">Alerta</button> breakable pickle brief utter laugh joyous print flock verse unequal bump offbeat agonizing trust clean wail dolls daffy elegant sand protective tail obsolete slave workable care vivacious tearful literate hope head dynamic stem decision gather vacuous able rub loud willing tremble apathetic redundant billowy spoil hurry snail scene orange jump
+      </div>
+      <div style="left:10%;height:30%;width:90%;padding:5%;text-align:center;font-size:2.5vh;">
+        <button onclick="helloworld(1)">Click me 1</button>
+        <button onclick="helloworld('a')">Alerta</button>
+        <button onclick="helloworld(2)">Click me 2</button><br>
+        <button onclick="helloworld('a')">Alerta</button>
+        <button onclick="helloworld(5)">Click me 3</button>
+        <button onclick="helloworld('a')">Alerta</button>
+      </div>
+      <div id="info">Hello World</div>
+    </div>
+
+    <!-- Gremlins JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gremlins.js/0.1.0/gremlins.min.js" type="text/javascript"></script>
+
+    <!-- Clicker Gremlin Code -->
+    <script>
+      var horde = gremlins.createHorde();
+
+      // events: [click, dblclick, mousedown, mouseup, mouseover, mousemove, mouseout]
+      // showed by: red circle (circle without fill)
+      var clickerGrem = gremlins.species.clicker();
+
+      // events: [alert, confirm, prompt]
+      var alertMog = gremlins.mogwais.alert();
+
+      var gizmoMog = gremlins.mogwais.gizmo();
+
+      clickerGrem.showAction(function(x,y) {
+        var clickSignal = document.createElement('div');
+        clickSignal.style.zIndex = 2000;
+        clickSignal.style.border = "3px solid blue";
+        clickSignal.style['border-radius'] = '50%'; // Chrome
+        clickSignal.style.borderRadius = '50%';     // Mozilla
+        clickSignal.style.width = "40px";
+        clickSignal.style.height = "40px";
+        clickSignal.style['box-sizing'] = 'border-box';
+        clickSignal.style.position = "absolute";
+        clickSignal.style.webkitTransition = 'opacity 1s ease-out';
+        clickSignal.style.mozTransition = 'opacity 1s ease-out';
+        clickSignal.style.transition = 'opacity 1s ease-out';
+        clickSignal.style.left = (x - 20 ) + 'px';
+        clickSignal.style.top = (y - 20 )+ 'px';
+        var element = document.body.appendChild(clickSignal);
+        setTimeout(function() {
+            document.body.removeChild(element);
+        }, 1000);
+        setTimeout(function() {
+            element.style.opacity = 0;
+        }, 50);}
+      );
+
+      alertMog.watchEvents(['alert'])
+      // gizmoMog.maxErrors(1);
+
+      horde.gremlin(clickerGrem);
+
+      horde.mogwai(alertMog)
+        .mogwai(gizmoMog);
+
+      horde.seed(100); // baseado no Chance.js, random não-randômico
+
+      horde.strategy(gremlins.strategies.distribution().delay(50));
+
+      horde.before(function startProfiler() {
+        console.profile('gremlins');
+      });
+
+      horde.after(function stopProfiler() {
+        console.profileEnd();
+      });
+
+      horde.unleash({nb:1000});
+    </script>
+
+    <!-- Page's Custom JS -->
+    <script>var z = 0;
+      function helloworld(x) {
+        if (x == 'a') {
+          document.getElementById("info").innerHTML = "Alerta " + ++z;
+          error("Alerta "+ z);
+          // alert("Alerta "+ z);
+        } else {
+          document.getElementById("info").innerHTML = "Hello World " + x;
+        }
+      }
+    </script>
+  </body>
+</html>
