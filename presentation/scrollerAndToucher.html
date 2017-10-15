@@ -82,101 +82,88 @@
 
 		<!-- Scroller and Toucher Gremlin Code -->
 	    <script>
+
 	    	var horde = gremlins.createHorde();
-
-		    // showed by: red circle (circle without fill)
-
 		    var toucherGremlin = gremlins.species.toucher();
 		    var scrollerGremlin = gremlins.species.scroller();
+		    var alertMog = gremlins.mogwais.alert();
+		    var gizmoMog = gremlins.mogwais.gizmo();
+		    var fpsMogwai = gremlins.mogwais.fps();
 
 	 		horde.gremlin(scrollerGremlin);
 	 		horde.gremlin(toucherGremlin);
 
-		    var alertMog = gremlins.mogwais.alert();
+	 		var touchTypesList = ['gesture', 'multitouch', 'tap', 'doubletap', 'tap'];
+	 		var distributionList = [0.2, 0.25, 0.25, 0.15, 0.15];
 
-		    var gizmoMog = gremlins.mogwais.gizmo();
-
-			toucherGremlin.touchTypes(['gesture', 'multitouch', 'doubletap']).positionSelector(
+			toucherGremlin.touchTypes(touchTypesList).positionSelector(
 				function() {
-			        var $el = $('#primeira-parte');
+					var $el = $('#primeira-parte');
 			        var offset = $el.offset();
 				        return [
-				 	       parseInt(Math.random() * $el.outerWidth() + offset.left),
-				           parseInt(Math.random() * $el.outerHeight() + offset.top)
+				        	parseInt(Math.random() * $el.outerWidth()/* + offset.left*/),
+				        	parseInt(Math.random() * $el.outerHeight()/* + offset.top*/)
 				        ];
 	 	    	}
 	 	    )
 
-	 	    scrollerGremlin.positionSelector(
+	 	    /*scrollerGremlin.positionSelector(
 				function() {
 			        var $el = $('#primeira-parte');
 			        var offset = $el.offset();
 				        return [
-				 	       parseInt(Math.random() * $el.outerWidth() + offset.left),
-				           parseInt(Math.random() * $el.outerHeight() + offset.top)
+				 	       parseInt(Math.random() * $el.outerWidth()/* + offset.left*),
+				           parseInt(Math.random() * $el.outerHeight()/* + offset.top*)
 				        ];
 	 	    	}
-	 	    )
+	 	    )*/
 
 	 	    var customLogger = {
-			  log:   function(msg) { console.log("A minha mensagem do log: " + msg); }/*,
-			  info:  function(msg) {  },
-			  warn:  function(msg) {  },
-			  error: function(msg) {  }*/
+	 	    	log:   function(msg) { console.log(msg); },
+	 	    	info:  function(msg) { console.info(msg); },
+	 	    	warn:  function(msg) { console.warn(msg); },
+	 	    	error: function(msg) { console.error(msg); }
 			};
 
 			horde.logger(customLogger);
-	/*
-	      clickerGrem.showAction(function(x,y) { // set animation circle color to blue
-	        var clickSignal = document.createElement('div');
-	        clickSignal.style.zIndex = 2000;
-	        clickSignal.style.border = "3px solid blue";
-	        clickSignal.style['border-radius'] = '50%'; // Chrome
-	        clickSignal.style.borderRadius = '50%';     // Mozilla
-	        clickSignal.style.width = "40px";
-	        clickSignal.style.height = "40px";
-	        clickSignal.style['box-sizing'] = 'border-box';
-	        clickSignal.style.position = "absolute";
-	        clickSignal.style.webkitTransition = 'opacity 1s ease-out';
-	        clickSignal.style.mozTransition = 'opacity 1s ease-out';
-	        clickSignal.style.transition = 'opacity 1s ease-out';
-	        clickSignal.style.left = (x - 20 ) + 'px';
-	        clickSignal.style.top = (y - 20 )+ 'px';
-	        var element = document.body.appendChild(clickSignal);
-	        setTimeout(function() {
-	            document.body.removeChild(element);
-	        }, 1000);
-	        setTimeout(function() {
-	            element.style.opacity = 0;
-	        }, 50);}
-	      ).canClick(function(element) { // set elements to be stress tested
-	       return $(element).parents('#button').length;
-	     })
-	*/
 
-	      alertMog.watchEvents(['alert', 'prompt', 'confirm'])
-	        .promptResponse(function() {return "Isso foi um prompt."})
-	        .confirmResponse(function() {return "Isso foi uma confirmação."});
-	      // gizmoMog.maxErrors(1);
+		    alertMog.watchEvents(['alert', 'prompt', 'confirm'])
+		    	.promptResponse(function() {return "Isso foi um prompt."})
+		    	.confirmResponse(function() {return "Isso foi uma confirmação."});
 
-	      //horde.gremlin(clickerGrem);
+	      	gizmoMog.maxErrors(1);
 
-	      horde.mogwai(alertMog)
-	        .mogwai(gizmoMog);
+	      	//horde.gremlin(clickerGrem);
 
-	      horde.seed(100); // baseado no Chance.js, random não-randômico
+		    horde.mogwai(alertMog).mogwai(gizmoMog);
 
-	      horde.strategy(gremlins.strategies.distribution().delay(50));
+		    fpsMogwai.delay(50)
+		    	.levelSelector(function(fps) {
+		    		if (fps <= 10)
+		    			return 'error';
 
-	      horde.before(function startProfiler() {
-	        console.profile('gremlins');
-	      });
+		    		if (fps <= 25)
+		    			return 'warn';
 
-	      horde.after(function stopProfiler() {
-	        console.profileEnd();
-	      });
+		    		return 'log';
+		    	})
 
-	      horde.unleash({nb:1000});
+		    horde.mogwai(fpsMogwai);
+
+		    horde.seed(100); // baseado no Chance.js, random não-randômico
+
+		    horde.strategy(gremlins.strategies.distribution().delay(50).distribution(distributionList));
+
+		    horde.before(function startProfiler() {
+		    	console.profile('gremlins');
+		    });
+
+		    horde.after(function stopProfiler() {
+		    	console.profileEnd();
+		    });
+
+		    horde.unleash({nb:1000});
+
 	    </script>
 
 	</body>
