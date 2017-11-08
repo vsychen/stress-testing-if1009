@@ -1,0 +1,18 @@
+// INCLUDE GREMLINS.JS
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gremlins.js/0.1.0/gremlins.min.js';
+document.head.appendChild(script);
+
+// CREATE NEW LOGGER
+var customLogger = {
+  log:   function(p1, p2, p3, p4, p5) { console.log(p1, p2, p3, p4, p5); },
+  info:  function(p1, p2) { console.log(p1, p2); },
+  warn:  function(p1, p2) { console.log(p1, p2); },
+  error: function(p1, p2) { console.log(p1, p2); }
+};
+
+// RUN GREMLINS.JS
+var horde = gremlins.createHorde();
+horde.logger(customLogger);
+horde.unleash({nb:10000});
