@@ -1,0 +1,43 @@
+
+<!-- https://docs.google.com/spreadsheets/d/1BM8Rg4K_yrH_P0Hy5bz0WIwQtG1LgnR0WmD276XSTT0/edit#gid=0 -->
+
+<head>
+  <script src="https://script.sheetsu.com/"></script>
+</head>
+
+<body>
+
+  <form id="myForm">
+    <input type="text" name="first_name">
+    <input type="text" name="score">
+	
+    <button type="submit">Save</button>
+  </form>
+  
+  <script>
+  
+    document.querySelector("#myForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      saveData();
+    });
+	
+    function saveData() {
+      var first_name = document.getElementsByName("first_name")[0].value,
+		score = document.getElementsByName("score")[0].value;
+		
+      var data = {
+		id: "44554",
+        name: first_name,
+        score: score
+      };
+	  
+	  console.log(data);
+	  
+      Sheetsu.write("https://sheetsu.com/apis/v1.0/4aa5887ad089", data, {}, function (result) {
+        console.log(result);
+      });
+    }
+	
+  </script>
+  
+</body>
