@@ -6,7 +6,7 @@
 var toggle = false;
 var status = 'off';
 var the_tab_id = '';
-var count = 10000; // # of gremlins
+var count = 1000; // # of gremlins
 
 function set_status() {
     toggle = !toggle;
@@ -20,7 +20,7 @@ function toggle_extension(tab){
     // Pass variable & execute script
     chrome.tabs.executeScript({ code: 'var extension_status = "'+status+'"' });
     chrome.tabs.executeScript({ code: 'var count = "'+count+'"' });
-    chrome.tabs.executeScript({ file: 'https://cdnjs.cloudflare.com/ajax/libs/gremlins.js/0.1.0/gremlins.min.js' });
+	chrome.tabs.executeScript({ file: 'gremlins.min.js' });
     chrome.tabs.executeScript({ file: 'persistent_gremlins.js' });
     // Set the tab id
     the_tab_id = tab.id;
