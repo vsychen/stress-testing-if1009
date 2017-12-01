@@ -6,9 +6,16 @@
   "version": "1.0",
 
   "background": {
-    "scripts": ["persistance.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
+  
+  "content_scripts": [
+    {
+      "matches": ["http://www.google.com.br/*", "https://www.google.com.br/*"],
+      "js": ["gremlins.min.js", "sheetsu.min.js", "window.js", "persistent_gremlins.js"]
+    }
+  ],
 
   "browser_action": {
     "default_icon": "icon-off.png",
@@ -16,6 +23,8 @@
   },
 
   "permissions": [
+    "background",
+    "storage",
     "activeTab",
     "<all_urls>"
   ]

@@ -6,7 +6,6 @@
 var toggle = false;
 var status = 'off';
 var the_tab_id = '';
-var count = 1000; // # of gremlins
 
 function set_status() {
     toggle = !toggle;
