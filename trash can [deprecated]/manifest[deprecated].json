@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Persistent Gremlins",
+  "description": "This extension allows the user to persistently monkey test a page.",
+  "version": "1.0",
+  
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["gremlins.min.js", "sheetsu.min.js", "window.js", "persistent_gremlins.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icon-off.png",
+	"default_title": "Persistent Gremlins",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "background",
+    "storage",
+    "activeTab",
+    "<all_urls>"
+  ]
+}

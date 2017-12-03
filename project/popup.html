@@ -17,22 +17,19 @@
         display: flex;
         justify-content: space-between;
       }
+	  
+	  button {
+	    magin: 10px 10px;
+	  }
     </style>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-    -->
-    <script src="persistent_gremlins.js"></script>
+    <script src="popup.js"></script>
   </head>
 
   <body>
     <h1>Persistent Gremlins</h1>
-    <div id="container">
+    <!--<div id="container">
       <span>How many gremlins?</span>
-      <br>
       <select id="dropdown">
         <option selected disabled hidden value='1000'></option>
         <option value="10">10</option>
@@ -41,6 +38,9 @@
         <option value="10000">10000</option>
         <option value="100000">100000</option>
       </select>
+    </div>-->
+    <div id="container">
+      <button id="toggle">Start</button>
     </div>
   </body>
 </html>
