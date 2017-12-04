@@ -16,3 +16,5 @@ chrome.runtime.onMessage.addListener(function(req, sender, sendResponse) {
   if (req.state == 1) on();
   else off();
 });
+
+window.onerror = function (msg, url, line, column, errorObj) { console.log(404); }
