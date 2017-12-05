@@ -6,11 +6,15 @@
 */
 
 function off() {
-  stopGremlins();
+  stopHorde();
 }
 
 function on() {
-  runGremlins();
+  runHorde();
+}
+
+function reset() {
+  resetHorde();
 }
 
 chrome.storage.local.get("state", function(result) {

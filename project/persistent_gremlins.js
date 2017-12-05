@@ -3,24 +3,21 @@ var count = 100; // TODO CHANGE # OF GREMLINS
 var seed = 2;
 var sheetsId = "https://sheetsu.com/apis/v1.0/4aa5887ad089"
 var horde = null;
+var running = false;
 
 function sendDataToSheets(data) {
   Sheetsu.write(sheetsId, data, {}, function (result) { console.log(result); });
 }
 
 function createLogger() {
-  var data = {};
   var logger = {
     log:
       function(p1, p2, p3, p4, p5, p6, p7) {
-        data.logType = "LOG";
-        data.gremlin = p1;
-        data.type = p2.trim();
+        var data = { logType: "LOG", gremlin: p1, type: p2.trim() };
 
         if (p2.search("clicker") >= 0) {
           data.event = p3;
           data.pos = p5 + " " + p6;
-          data.description = "";
           sendDataToSheets(data);
         } else if (p2.search("toucher") >= 0) {
           data.event = p3;
@@ -35,7 +32,6 @@ function createLogger() {
         } else if (p2.search("scroller") >= 0) {
           data.event = "scroll";
           data.pos = p5;
-          data.description = "";
           sendDataToSheets(data);
         } else if (p2.search("typer") >= 0) {
           data.type = "typer";
@@ -45,57 +41,37 @@ function createLogger() {
           sendDataToSheets(data);
         } else {
           if (p2.search("fps") < 0) {
-            var s = "LOG: " + p1 + " " + p2;
-            if (p3 != null) s = s + " " + p3;
-            if (p4 != null) s = s + " " + p4;
-            if (p5 != null) s = s + " " + p5;
-            if (p6 != null) s = s + " " + p6;
-            if (p7 != null) s = s + " " + p7;
-            console.log(s);
+            console.log("LOG: %s %s %s %s %s %s %s", p1, p2, (p3 != null) ? p3 : "", (p4 != null) ? p4 : "", (p5 != null) ? p5 : "", (p6 != null) ? p6 : "", (p7 != null) ? p7 : "");
           }
         }
       },
     warn:
       function(p1, p2, p3, p4) {
-        data.logType = "LOG";
-        data.gremlin = p1;
-        data.type = p2.trim();
+        var data = { logType: "WARN", gremlin: p1, type: p2.trim() };
 
         if (p2.search("alert") >= 0) {
           data.event = p4;
-          data.pos = "";
           data.description = p3;
           sendDataToSheets(data);
         } else if (p2.search("fps") >= 0) {
-          data.event = "";
-          data.pos = "";
           data.description = p3;
           sendDataToSheets(data);
         } else if (p2.search("gizmo") >= 0) {
-          data.event = "";
-          data.pos = "";
           data.description = "stopped test execution after " + p4 + " errors";
           sendDataToSheets(data);
         } else {
-          var s = "LOG: " + p1 + " " + p2;
-          if (p3 != null) s = s + " " + p3;
-          if (p4 != null) s = s + " " + p4;
-          console.log(s);
+          console.log("WARN: %s %s %s %s", p1, p2, (p3 != null) ? p3 : "", (p4 != null) ? p4 : "");
         }
       },
     error:
       function(p1, p2, p3) {
-        data.logType = "ERROR";
-        data.gremlin = p1;
-        data.type = p2.trim();
+        var data = { logType: "ERROR", gremlin: p1, type: p2.trim() };
 
         if (p2.search("fps") >= 0) {
           data.description = p3;
           sendDataToSheets(data);
         } else {
-          var s = "LOG: " + p1 + " " + p2;
-          if (p3 != null) s = s + " " + p3;
-          console.log(s);
+          console.log("ERROR: %s %s %s", p1, p2, (p3 != null) ? p3 : "");
         }
       }
   };
@@ -174,14 +150,32 @@ function configGremlins(horde) {
   return horde;
 }
 
-function runGremlins() {
+function runHorde() {
   if (horde == null) {
     horde = gremlins.createHorde();
     horde = configGremlins(horde);
+  }
+  
+  if (!running) {
     horde.unleash({ nb: count });
+	running = true;
   }
 }
 
-function stopGremlins() {
-  if (horde != null) horde.stop();
+function stopHorde() {
+  if (horde != null && running) {
+    horde.stop();
+	running = false;
+  }
+}
+
+function resetHorde() {
+  if (horde != null) {
+    if (running) {
+      horde.stop();
+      running = false;
+	}
+
+    horde = null;
+  }
 }
