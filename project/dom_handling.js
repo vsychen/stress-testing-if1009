@@ -14,14 +14,33 @@ function errorHandling() {
     document.dispatchEvent(new CustomEvent('ReportError', {detail:error}));
   });
 }
-/* TODO
-function alertHandling() {
-  window.addEventListener('alert', function(e) {
-    var alert = {
-	  
-	}
-  });
-}*/
+
+function popUpHandling() {
+  var data = {logType: "ALERT", gremlin: "", pos: ""};
+
+  // ALERT
+  window.alert = function(alert) {
+    data.type = "ALERT";
+    data.event = "ALERT";
+    data.description = alert;
+  }
+
+  // PROMPT
+  window.prompt = function(prompt) {
+    data.type = "PROMPT";
+    data.event = "PROMPT";
+    data.description = prompt;
+  }
+
+  // CONFIRM
+  window.confirm = function(confirm) {
+    data.type = "CONFIRM";
+    data.event = "CONFIRM";
+    data.description = confirm;
+  }
+
+  sendDataToSheets(data);
+}
 
 document.addEventListener('ReportError', function(e) {
   data = {};
@@ -36,5 +55,9 @@ document.addEventListener('ReportError', function(e) {
 
 var script = document.createElement('script');
 script.textContent = '(' + errorHandling + '())';
+(document.head||document.documentElement).appendChild(script);
+script.parentNode.removeChild(script);
+script = document.createElement('script');
+script.textContent = '(' + popUpHandling + '())';
 (document.head||document.documentElement).appendChild(script);
 script.parentNode.removeChild(script);

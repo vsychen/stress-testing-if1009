@@ -1,6 +1,8 @@
 /*
-  Based on answer provided by shanomurphy at stackoverflow.
+  Based on answer provided by Emrys Myrooin at stackoverflow.
   [https://stackoverflow.com/a/31807498]
+  Based on answer provided by Paul Fourmel at stackoverflow.
+  [https://stackoverflow.com/a/14739080]
 */
 
 document.addEventListener("DOMContentLoaded", function() {

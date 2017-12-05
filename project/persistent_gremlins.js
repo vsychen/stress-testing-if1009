@@ -2,6 +2,7 @@
 var count = 100; // TODO CHANGE # OF GREMLINS
 var seed = 2;
 var sheetsId = "https://sheetsu.com/apis/v1.0/4aa5887ad089"
+var horde = null;
 
 function sendDataToSheets(data) {
   Sheetsu.write(sheetsId, data, {}, function (result) { console.log(result); });
@@ -174,7 +175,13 @@ function configGremlins(horde) {
 }
 
 function runGremlins() {
-  var horde = gremlins.createHorde();
-  horde = configGremlins(horde);
-  horde.unleash({ nb: count });
+  if (horde == null) {
+    horde = gremlins.createHorde();
+    horde = configGremlins(horde);
+    horde.unleash({ nb: count });
+  }
+}
+
+function stopGremlins() {
+  if (horde != null) horde.stop();
 }
